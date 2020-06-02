@@ -1,0 +1,230 @@
+;;;Maphack
+;;Show units under fog
+;ORIGINAL
+6F3A136B      23CA          AND ECX,EDX
+;PATCHED
+6F3A136B      90            NOP
+6F3A136C      90            NOP
+
+;;Show animations under fog
+;ORIGINAL
+6F3A128C  |.  23CA          AND ECX,EDX
+;PATCHED
+6F3A128C      90            NOP
+6F3A128D      90            NOP
+
+;;Illusions
+;ORIGINAL
+6F28282C      C3            RETN
+6F28282D      CC            INT3
+;PATCHED
+6F28282C      40            INC EAX
+6F28282D      C3            RETN
+
+;;Invis
+;ORIGINAL
+6F3997AB  |> \8B97 98010000 MOV EDX,DWORD PTR DS:[EDI+198]
+6F3997B1  |.  8B8F 78010000 MOV ECX,DWORD PTR DS:[EDI+178]
+6F3997B7  |.  8D8457 180200 LEA EAX,[EDX*2+EDI+218]
+6F3997BE  |.  0FB700        MOVZX EAX,WORD PTR DS:[EAX]
+6F3997C1  |.  55            PUSH EBP
+6F3997C2  |.  50            PUSH EAX 
+6F3997C3  |.  56            PUSH ESI
+6F3997C4  |.  E8 F77B0000   CALL 6F3A13C0
+;PATCHED
+6F3997AB     \90                NOP
+6F3997AC      90                NOP
+6F3997AD      90                NOP
+6F3997AE      90                NOP
+6F3997AF      90                NOP
+6F3997B0      90                NOP
+6F3997B1      90                NOP
+6F3997B2      90                NOP
+6F3997B3      90                NOP
+6F3997B4      90                NOP
+6F3997B5      90                NOP
+6F3997B6      90                NOP
+6F3997B7      90                NOP
+6F3997B8      90                NOP
+6F3997B9      90                NOP
+6F3997BA      90                NOP
+6F3997BB      90                NOP
+6F3997BC      90                NOP
+6F3997BD      90                NOP
+6F3997BE      90                NOP
+6F3997BF      90                NOP
+6F3997C0      90                NOP
+6F3997C1      90                NOP
+6F3997C2      90                NOP
+6F3997C3      90                NOP
+6F3997C4      90                NOP
+6F3997C5      90                NOP
+6F3997C6      33C0              XOR EAX,EAX
+6F3997C8      40                INC EAX
+
+;;Items
+;ORIGINAL
+6F3A12AB     /75 15         JNE SHORT 6F3A12C2
+;PATCHED
+6F3A12AB     /EB 15         JMP SHORT 6F3A12C2
+
+;;Units Minimap
+;ORIGINAL
+6F36120B  |> \B8 01000000   MOV EAX,1
+;PATCHED
+6F36120B  |> \B8 00000000   MOV EAX,0
+
+;;UD Blight
+;ORIGINAL
+6F4069D2  |.  23C8          AND ECX,EAX
+;PATCHED
+6F4069D2      90            NOP
+6F4069D3      41            INC EDX
+
+;;Fog Mainmap
+;Player view
+;ORIGINAL
+6F74C7C1      8B5424 28     MOV EDX,DWORD PTR SS:[ESP+28]
+6F74C7C5      52            PUSH EDX
+;PATCHED
+6F74C7C1      68 FF0F0000   PUSH 0FFF
+;All view
+;ORIGINAL
+6F74C7E9  |.  8A90 4C1EAA6F MOV DL,BYTE PTR DS:[EAX+6FAA1E4C]
+;PATCHED
+6F74C7E9      B2 00         MOV DL,0
+6F74C7EB      90            NOP
+6F74C7EC      90            NOP
+6F74C7ED      90            NOP
+6F74C7EE      90            NOP
+
+;;Fog minimap
+;Player view
+;ORIGINAL
+6F356288  |.  66:23C2       ||AND AX,DX
+;PATCHED
+6F356288  |.  66:21C0       AND AX,AX
+;All view
+;ORIGINAL
+6F3562F5  |.  8801          MOV BYTE PTR DS:[ECX],AL
+;PATCHED
+6F3562F5      90            NOP
+6F3562F6      90            NOP
+
+;;Show skills and cooldowns
+;ORIGINAL
+6F2024AC  |. /0F84 5F010000 JE 6F202611
+;PATCHED
+6F2024AC      90                  NOP
+6F2024AD      90                  NOP
+6F2024AE      90                  NOP
+6F2024AF      90                  NOP
+6F2024B0      90                  NOP
+6F2024B1      90                  NOP
+;ORIGINAL
+6F28DFAE  |. /75 31         JNE SHORT 6F28DFE1
+;PATCHED
+6F28DFAE     /EB 31         JMP SHORT 6F28DFE1
+;ORIGINAL
+6F34F078  |. /74 08         JE SHORT 6F34F082
+;PATCHED
+6F34F078      90                  NOP
+6F34F079      90                  NOP
+;ORIGINAL
+6F34F0B8  |. /74 08         JE SHORT 6F34F0C2
+;PATCHED
+6F34F0B8  |. /74 00               JE SHORT 6F34F0BA
+
+;;Make units clickable
+;ORIGINAL
+6F284F6C  |. /74 2A         JE SHORT 6F284F98
+;PATCHED
+6F284F6C      90            NOP
+6F284F6D      90            NOP
+;ORIGINAL
+6F284F82  |. /75 29         JNE SHORT 6F284FAD
+;PATCHED
+6F284F82     /EB 29         JMP SHORT 6F284FAD
+
+;;Show enemy pings
+;ORIGINAL - 66
+6F43EC66  |.  85C0          TEST EAX,EAX
+;PATCHED
+6F43EC66      3BC0          CMP EAX,EAX
+;ORIGINAL - 69
+6F43EC68  |. /0F84 C0000000 JE 6F43ED2E
+;PATCHED
+6F43EC68  |. /0F85 C0000000 JNE 6F43ED2E
+;ORIGINAL - 79
+6F43EC79  |.  85C0          TEST EAX,EAX
+;PATCHED
+6F43EC79  |.  3BC0          CMP EAX,EAX
+;ORIGINAL - 7C
+6F43EC7B  |. /0F84 AD000000 JE 6F43ED2E
+;PATCHED
+6F43EC7B  |. /0F85 AD000000 JNE 6F43ED2E
+
+;;Show resources
+;ORIGINAL
+6F35F81A  |. /EB 08         JMP SHORT 6F35F824
+;PATCHED
+6F35F81A      90            NOP
+6F35F81B      90            NOP
+
+;;Enable trading
+;ORIGINAL
+6F34DB72  |.  8B87 6C010000 MOV EAX,DWORD PTR DS:[EDI+16C]
+6F34DB78  |.  EB 06         JMP SHORT 6F34DB80
+6F34DB7A  |>  8B87 68010000 MOV EAX,DWORD PTR DS:[EDI+168]
+;PATCHED
+6F34DB72      B8 C8000000   MOV EAX,0C8
+6F34DB77      90            NOP
+6F34DB78      EB 06         JMP SHORT 6F34DB80
+6F34DB7A      B8 64000000   MOV EAX,64
+6F34DB7F      90            NOP
+
+;;Rune Notifier
+;Patches
+6F3BB770  /.  8B4424 0C     MOV EAX,DWORD PTR SS:[ARG.3]
+6F3BB774  |.  8B5424 08     MOV EDX,DWORD PTR SS:[ARG.2]
+6F3BB778  |.  8B4C24 04     MOV ECX,DWORD PTR SS:[ARG.1]
+
+;;Roshan Notifier
+;Patch pos				- 6F3C50A7
+;Jump back				- 6F3C50AC
+;Original call			- 6F3BD180
+
+;;Chat hook
+;Hook func				- 6F2FC51C
+;Jump back to			- 6F2FC526
+;Overwritten jump		- 6F2FC7A4
+
+;;Grey HP under fog
+;Patch pos				- 6F3649C2
+
+;;Color invisible
+;Patch pos				- 6F399765
+;Original call			- 6F2AB4E0
+;Color unit				- 6F4D2FF0
+
+;;Mana bar
+;Functions
+;#01 					- 6F27AC60
+;#02					- 6F333F50
+;#03					- 6F605F80
+;#04					- 6F605A90
+;#05					- 6F359A90
+;#06					- 6F32C650
+;#07					- 6F2C7280
+
+;Other stuff
+;#01					- 6F3798B3
+;#02					- 6F379CB8
+
+;;;FUNCTIONS & Class offsets
+;;TextOut				- 6F2FB250
+;;TextToLog				- 6F34EA90
+;;Global class			- 6FAB4F80
+;;Local player class	- 6FAB65F4
+
+;;Stuff
